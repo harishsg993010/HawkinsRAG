@@ -1,0 +1,72 @@
+[project]
+name = "hawkins_rag"
+version = "0.1.0"
+description = "A Python package for building RAG systems with HawkinsDB and multiple data source integrations"
+requires-python = ">=3.11"
+authors = [
+    { name = "HawkinsRAG Team" }
+]
+license = { text = "MIT" }
+readme = "README.md"
+keywords = ["rag", "llm", "ai", "search", "hawkinsdb", "embeddings"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+    "atlassian-python-api>=3.41.16",
+    "beautifulsoup4>=4.12.3",
+    "build>=1.2.2.post1",
+    "deepgram-sdk>=3.7.7",
+    "discord-py>=2.4.0",
+    "docx2txt>=0.8",
+    "dropbox>=12.0.2",
+    "feedparser>=6.0.11",
+    "flask-login>=0.6.3",
+    "google-api-python-client>=2.156.0",
+    "google-auth>=2.37.0",
+    "google-auth-httplib2>=0.2.0",
+    "google-auth-oauthlib>=1.2.1",
+    "hatchling>=1.27.0",
+    "hawkinsdb>=1.0.1",
+    "lxml>=5.3.0",
+    "mysql-connector-python>=9.1.0",
+    "notion-client>=2.3.0",
+    "oauthlib>=3.2.2",
+    "openai>=1.0.0",
+    "openpyxl>=3.1.5",
+    "pandas>=2.2.3",
+    "psycopg2-binary>=2.9.10",
+    "pygithub>=2.5.0",
+    "pypdf2>=3.0.1",
+    "python-dotenv>=1.0.1",
+    "pyyaml>=6.0.2",
+    "reportlab>=4.2.5",
+    "requests>=2.32.3",
+    "slack-sdk>=3.34.0",
+    "tenacity>=9.0.0",
+    "trafilatura>=2.0.0",
+    "twine>=6.0.1",
+    "unstructured[md]>=0.16.11",
+    "validators>=0.34.0",
+    "xlrd>=2.0.1",
+    "youtube-transcript-api>=0.6.3",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.urls]
+Documentation = "https://github.com/harishsg993010/HawkinsRAG/docs"
+Source = "https://github.com/harishsg993010/HawkinsRAG"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hawkins_rag"]
+
+[tool.hatch.build]
+only-packages = true

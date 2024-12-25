@@ -1,0 +1,330 @@
+modules = ["python-3.11"]
+
+[nix]
+channel = "stable-24_05"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "CLI App"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Simple RAG Test"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Test User API"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Test PDF Loading"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Test RAG"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Test Loaders"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Test Web Loaders"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Test Advanced Loaders"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Test GitHub Loader"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Test HawkinsDB RAG"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Test Audio RAG"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Test QnA Loader"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Test Slack Loader"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Test Directory Loader"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Test Installed Package"
+
+[[workflows.workflow]]
+name = "CLI App"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python -m hawkins_rag.cli test-loaders --loaders docx,local_text,json,webpage,csv,postgresql,mdx,openapi"
+
+[[workflows.workflow]]
+name = "Simple RAG Test"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python -c \"from hawkins_rag import HawkinsRAG; import logging; logging.basicConfig(level=logging.INFO); rag = HawkinsRAG(); print('Successfully initialized HawkinsRAG')\""
+
+[[workflows.workflow]]
+name = "Test User API"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python examples/test_user_api.py"
+
+[[workflows.workflow]]
+name = "Test PDF Loading"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = """
+python -c \"
+from hawkins_rag import HawkinsRAG
+import logging
+from PyPDF2 import PdfWriter, PageObject
+import io
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+
+logging.basicConfig(level=logging.INFO)
+
+# Create a simple PDF with reportlab
+def create_test_pdf(filename):
+    packet = io.BytesIO()
+    can = canvas.Canvas(packet, pagesize=letter)
+    can.drawString(100, 100, 'Test content for RAG system')
+    can.save()
+    packet.seek(0)
+    
+    # Create PDF file
+    output = PdfWriter()
+    page = PageObject.create_blank_page(width=letter[0], height=letter[1])
+    output.add_page(page)
+    
+    with open(filename, 'wb') as file:
+        output.write(file)
+
+# Create test file and initialize RAG
+test_pdf = 'test.pdf'
+create_test_pdf(test_pdf)
+
+# Initialize and test RAG
+rag = HawkinsRAG()
+print('Created test PDF and initialized HawkinsRAG')
+result = rag.load_document(test_pdf)
+print(f'Document loaded: {result}')
+
+# Test query
+response = rag.query('What is the content about?')
+print(f'Query response: {response}')
+\"
+"""
+
+[[workflows.workflow]]
+name = "Test RAG"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python examples/test_rag.py"
+
+[[workflows.workflow]]
+name = "Test Loaders"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python examples/test_loaders.py"
+
+[[workflows.workflow]]
+name = "Test Web Loaders"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python examples/test_web_loaders.py"
+
+[[workflows.workflow]]
+name = "Test Advanced Loaders"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python examples/test_advanced_loaders.py"
+
+[[workflows.workflow]]
+name = "Test GitHub Loader"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python examples/test_github_loader.py"
+
+[[workflows.workflow]]
+name = "Test HawkinsDB RAG"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python examples/test_hawkinsdb_rag.py"
+
+[[workflows.workflow]]
+name = "Test Audio RAG"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python examples/test_audio_rag.py"
+
+[[workflows.workflow]]
+name = "Test QnA Loader"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python examples/test_qna_loader.py"
+
+[[workflows.workflow]]
+name = "Test Slack Loader"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python examples/test_slack_loader.py"
+
+[[workflows.workflow]]
+name = "Test Directory Loader"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python examples/test_directory_loader.py"
+
+[[workflows.workflow]]
+name = "Test Installed Package"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python3 -c \"from hawkins_rag import HawkinsRAG; rag = HawkinsRAG(); print('Successfully initialized HawkinsRAG from PyPI package')\""
+
+[deployment]
+run = ["sh", "-c", "python -m hawkins_rag.cli test-loaders --loaders docx,local_text,json,webpage,csv,postgresql,mdx,openapi"]
+
+[[ports]]
+localPort = 8080
+externalPort = 80
