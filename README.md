@@ -1,21 +1,25 @@
 # HawkinsRAG
 
-A Python package for building Retrieval-Augmented Generation (RAG) systems with HawkinsDB and multiple data source integrations.
+A powerful Python package for building production-ready Retrieval-Augmented Generation (RAG) systems. Seamlessly integrate with HawkinsDB and various data sources to enhance your LLM applications.
 
-## Features
-- Multiple data source support through specialized loaders
-- Efficient text chunking and embedding
-- Seamless integration with HawkinsDB
-- Flexible configuration options
-- Comprehensive error handling
+- Python 3.8+
+- MIT License
+- Available on PyPI
 
-## Installation
+## ✨ Features
+
+- 🔌 Extensive data source integrations (22+ data sources)
+- 🚀 Native HawkinsDB integration
+
+## 🚀 Quick Start
+
+### Installation
 
 ```bash
 pip install hawkins-rag
 ```
 
-## Quick Start
+### Basic Usage
 
 ```python
 from hawkins_rag import HawkinsRAG
@@ -23,38 +27,74 @@ from hawkins_rag import HawkinsRAG
 # Initialize RAG system
 rag = HawkinsRAG()
 
-# Load document
+# Load and process a document
 result = rag.load_document("document.txt", source_type="text")
 
-# Query content
+# Query your content
 response = rag.query("What is this document about?")
 print(response)
 ```
 
-## Supported Data Sources
+## 🔌 Supported Integrations
 
-HawkinsRAG supports multiple data sources through specialized loaders:
+### Document Formats
+- 📄 Text Files (`.txt`)
+- 📑 PDF Documents (`.pdf`)
+- 📝 Markdown Files (`.md`, `.mdx`)
+- 📊 Microsoft Office (`.docx`)
+- 📈 Excel Files (`.xlsx`, `.xls`)
+- 🔤 JSON Files (`.json`)
+- 📊 CSV Files (`.csv`)
+- 📋 XML Files (`.xml`)
+- 📂 Directory Loading
 
-- Text files (txt, pdf, docx)
-- Web content (YouTube, webpages)
-- Structured data (JSON, CSV)
-- APIs (GitHub, Gmail, Slack)
-- Databases (MySQL, PostgreSQL)
-- And many more!
+### Web & APIs
+- 🌐 Web Pages & URLs
+- 📺 YouTube Videos
+- 📱 OpenAPI Specifications
+- 📰 RSS Feeds
+- 🐝 Beehive Integration
+- 💬 Local Text Processing
 
-## Configuration
+### Development & Collaboration Tools
+- 💻 GitHub Integration
+- 💬 Slack Workspace
+- 📂 Directory Crawling
+- 🔍 Unstructured File Processing
+- ❓ Q&A Format Support
+
+### Google Workspace
+- 📧 Gmail Integration
+- 💾 Google Drive
+- 📊 Google Workspace Apps
+
+### Media & Special Formats
+- 🎵 Audio Files
+- 📝 Q&A Datasets
+- 📄 Unstructured Content
+
+## ⚙️ Configuration
 
 ```python
 config = {
-    "storage_type": "sqlite",  # or "postgres"
-    "db_path": "hawkins_rag.db",
-    "chunk_size": 500,
-    "loader_config": {
+    "storage": {
+        "type": "sqlite",  # or "postgres"
+        "path": "hawkins_rag.db",
+        "connection_string": "postgresql://user:pass@localhost:5432/db"
+    },
+    "processing": {
+        "chunk_size": 500,
+        "overlap": 50
+    },
+    "integrations": {
         "youtube": {
             "api_key": "YOUR_YOUTUBE_API_KEY"
         },
         "github": {
             "token": "YOUR_GITHUB_TOKEN"
+        },
+        "google": {
+            "credentials_path": "path/to/credentials.json"
         }
     }
 }
@@ -62,10 +102,34 @@ config = {
 rag = HawkinsRAG(config=config)
 ```
 
-## License
+## 📚 Documentation
+
+For comprehensive documentation, visit our [documentation on GitHub](https://github.com/harishsg993010/HawkinsRAG/tree/main/docs).
+
+## 💡 Examples
+
+For usage examples and code samples, check out our [examples directory](https://github.com/harishsg993010/HawkinsRAG/tree/main/examples).
+
+## 🔄 Advanced Usage
+
+### Custom Data Source Integration
+
+```python
+from hawkins_rag import BaseLoader
+
+class CustomLoader(BaseLoader):
+    def load(self, source):
+        # Implement custom loading logic
+        pass
+
+# Register custom loader
+rag.register_loader("custom", CustomLoader())
+```
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Documentation
-
-For detailed documentation, visit [HawkinsRAG Documentation](https://github.com/harishsg993010/HawkinsRAG/docs).
